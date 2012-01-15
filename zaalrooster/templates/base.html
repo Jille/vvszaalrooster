@@ -1,0 +1,28 @@
+<html>
+	<head>
+		<title>VvS zaalrooster</title>
+		<link href="{{ MEDIA_URL }}style.css" rel="stylesheet" type="text/css" />
+		{% block head %}{% endblock %}
+	</head>
+	<body{% block bodyattrs %}{% endblock %}>
+		<div id="wrapper">
+			<div id="header">
+				<span id="user-tools">
+					Dag {{ user }}. <a href="{% url logout %}">Uitloggen?</a>
+				</span>
+				<h1>Zaalrooster Villa van Schaeck</h1>
+			</div>
+{% if messages %}
+			<ul class="messages">
+	{% for message in messages %}
+				<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+	{% endfor %}
+			</ul>
+{% endif %}
+			<div id="content">
+				{% block body %}{% endblock %}
+			</div>
+		</div>
+		{% block footer %}{% endblock %}
+	</body>
+</html>

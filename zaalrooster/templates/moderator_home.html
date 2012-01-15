@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block body %}
+<h1>Zaalrooster beheer</h1>
+<ul class="moderatorLinks">
+{% for m in months %}
+	<li><a href="{% url month-view year=m.year, month=m.month %}">{{ m.human }}</a></li>
+{% endfor %}
+	<li><a href="/pending/">Openstaande aanvragen</a></li>
+	<li><a href="/approved/">Goedgekeurde aanvragen</a></li>
+
+	<li class="empty"></li>
+
+	<li><a href="/future/confirmed/">Actuele getekende aanvragen</a></li>
+	<li><a href="/future/backup/">Actuele reservelijst</a></li>
+	<li><a href="/future/denied/">Actuele afgewezen aanvragen</a></li>
+	<li><a href="/future/cancelled/">Actuele geannuleerde aanvragen</a></li>
+
+	<li class="empty"></li>
+
+	<li><a href="/confirmed/">All getekende aanvragen</a></li>
+	<li><a href="/backup/">Volledige reservelijst</a></li>
+	<li><a href="/denied/">Alle afgewezen aanvragen</a></li>
+	<li><a href="/cancelled/">Alle geannuleerde aanvragen</a></li>
+
+	<li class="empty"></li>
+
+	<li><a href="/admin/">Beheer</a></li>
+</ul>
+{% endblock %}

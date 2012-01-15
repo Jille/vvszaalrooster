@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block head %}
+		<script type="text/javascript">
+			function change_state(el, id, oldstate, newstate, desc) {
+				newstateHuman = newstate;
+				for(var i = 0; el.options.length > i; i++) {
+					if(el.options[i].value == newstate) {
+						newstateHuman = el.options[i].innerHTML;
+						break;
+					}
+				}
+				if(confirm("Zet "+ desc +" op "+ newstateHuman +"?")) {
+					location.href = '/set-state/?id='+ id +'&state='+ newstate;
+				} else {
+					el.value = oldstate;
+				}
+			}
+		</script>
+{% endblock %}
+
+{% block body %}
+<h1>{{ humanstate }}{{ humanperiod }}</h1>
+<table class="list">
+	<tr>
+		<th>Huurder</th>
+		<th>Zaal</th>
+		<th>Datum</th>
+		<th>Wat</th>
+		<th>Timeframe</th>
+		<th>State</th>
+		<th>Aangevraagd</th>
+	</tr>
+{% for r in reservations %}
+	<tr class="{% cycle "zero" "one" %}">
+		<td>{{ r.hirer }}</td>
+		<td>{{ r.room }}</td>
+		<td>{{ r.date }}</td>
+		<td>{{ r.name }}</td>
+		<td>{{ r.timeframe }}</td>
+		<td>
+			<select onChange='change_state(this, {{ r.id }}, "{{ r.state }}", this.value, "{{ r }}");'>
+	{% for s in states %}
+				<option value="{{ s.0 }}"{% if s.0 == r.state %} selected="selected"{% endif %}>{{ s.1 }}</option>
+	{% endfor %}
+			</select>
+		</td>
+		<td>{{ r.added }}</td>
+	</tr>
+{% endfor %}
+</table>
+{% endblock %}

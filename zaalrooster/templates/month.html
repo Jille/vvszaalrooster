@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block head %}
+	<script type="text/javascript" src="{{ MEDIA_URL }}overlib.js"></script>
+{% endblock %}
+
+{% block body %}
+<span class="prevnext"><a href="{{ prev }} "><img src="{{ MEDIA_URL }}prev.png"></a> <a href="{{ next }}"><img src="{{ MEDIA_URL }}next.png"></a></span>
+<h1>Zaalrooster {{ monthhuman }} {{ year }}</h1>
+<table class="agenda">
+	<tr>
+		<th></th>
+		<th>Maandag</th>
+		<th>Dinsdag</th>
+		<th>Woensdag</th>
+		<th>Donderdag</th>
+		<th>Vrijdag</th>
+		<th>Zaterdag</th>
+		<th>Zondag</th>
+	</tr>
+{% for week in table %}
+	{% for roomrow in week %}
+		{% if forloop.first %}
+	<tr class="daterow">
+		<td></td>
+		{% for day in roomrow.days %}
+		<td{% if not day.activeMonth %} class="inactiveMonth"{% endif %}>{% if day.inFuture %}<a href="{{ day.subscribeURL }}" class="subscribe"><img src="{{ MEDIA_URL }}subscribe.png"></a>{% endif %}{{ day.date }}</td>
+		{% endfor %}
+	</tr>
+		{% endif %}
+	<tr>
+		<td>{{ roomrow.room|capfirst }}</td>
+		{% for day in roomrow.days %}
+			<td>
+				{# <div class="date">{{ day.date }}</div> #}
+				{% for fr in day.fixedRent %}
+					<div class="fixedRent" onMouseOver="return overlib('Vaste huur<br>{{ fr.timeframe|addslashes }}');" onMouseOut="return nd();"><span class="hirer">{{ fr.hirer }}</span></div>
+				{% endfor %}
+				{% for fre in day.fixedRentExceptions %}
+					<div class="fixedRentException" onMouseOver="return overlib('Geannuleerd: <s>Vaste huur</s><br><s>{{ fre.rental.timeframe|addslashes }}</s>');" onMouseOut="return nd();"><span class="hirer">{{ fre.rental.hirer }}</span></div>
+				{% endfor %}
+				{% for r in day.reservations %}
+					<div class="reservation state_{{ r.state }}" onMouseOver="return overlib('{{ r.getHumanState }}<br>{{ r.name|addslashes }}<br>{{ r.timeframe|addslashes }}');" onMouseOut="return nd();"><span class="hirer">{{ r.hirer }}</span></div>
+				{% endfor %}
+			</td>
+		{% endfor %}
+	</tr>
+	{% endfor %}
+{% endfor %}
+</table>
+{% endblock %}

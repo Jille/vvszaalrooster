@@ -1,0 +1,194 @@
+html, body {
+	margin: 0;
+}
+a img {
+	border: none;
+}
+
+/* Header */
+div#header {
+	color: #F4F379;
+	background-color: #417690;
+	height: 37px;
+	padding: 0px 10px;
+}
+div#header h1 {
+	margin-top: 0px;
+	padding: 5px 0;
+	font-size: 18pt;
+	font-weight: normal;
+}
+div#header #user-tools {
+	padding-top: 5px;
+	float: right;
+	font-size: 10pt;
+}
+div#header #user-tools a {
+	color: white;
+	text-decoration: none;
+}
+div#header #user-tools a:hover {
+	text-decoration: underline;
+}
+
+/* Footer */
+div#footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 30px;
+	border-top: 1px solid #606060;
+	text-align: right;
+	color: #606060;
+}
+div#footer a {
+	color: #606060;
+}
+
+/* Content */
+div#content {
+	margin: 10px 20px;
+}
+
+div#content h1 {
+	color: #606060;
+	font-size: 18pt;
+	font-weight: bold;
+}
+
+/* Moderator home */
+.moderatorLinks a:visited {
+	color: blue;
+}
+li.empty {
+	list-style-type: none;
+	margin-bottom: 10px;
+}
+
+/* Agenda view */
+table.agenda {
+	width: 100%;
+	border-collapse: collapse;
+}
+table.agenda th {
+	background: #7CA0C7 url(/static/admin/img/admin/default-bg.gif) top left repeat-x;
+	text-align: left;
+}
+table.agenda td {
+	border: 1px solid black;
+	border-left: 2px solid black;
+	border-right: 2px solid black;
+	vertical-align: top;
+}
+table.agenda tr.daterow {
+	border-top: 2px solid black;
+}
+table.agenda tr.daterow td {
+	color: #505050;
+	background-color: #E1E1E1;
+	font-weight: bold;
+}
+table.agenda tr.daterow td.inactiveMonth {
+	font-weight: normal;
+	color: #606060;
+}
+table.agenda td .date {
+	float: right;
+	font-size: 10pt;
+}
+table.agenda td .fixedRentException {
+	text-decoration: line-through;
+}
+
+table.agenda td .state_pending:after {
+	content:"?";
+}
+table.agenda td .state_approved {
+	border-bottom: 1px dashed #000000;
+	display: inline;
+}
+table.agenda td .state_confirmed {
+}
+table.agenda td .state_backup {
+	color: #888888;
+}
+table.agenda td .state_backup:after {
+	content:"?";
+}
+table.agenda td .state_cancelled, table.agenda td .state_denied { 
+	text-decoration: line-through;
+}
+.prevnext {
+	float: right;
+}
+.prevnext a {
+	padding-left: 20px;
+}
+table.agenda a.subscribe {
+	float: right;
+}
+
+/* List view */
+.list {
+	border-collapse: collapse;
+	width: 100%;
+	border: 1px solid #D0D0D0;
+}
+.list th {
+	text-align: left;
+	color: #606060;
+	background-color: #E1E1E1;
+	font-size: 11pt;
+}
+.list td, .list th {
+}
+.list tr.zero {
+	background-color: #EDF3FE;
+}
+.list tr.one {
+}
+
+/* Login page */
+body.loginpage {
+	background-color: #E0E0E0;
+	height: 100%;
+	overflow: hidden;
+}
+body.loginpage div#wrapper {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 100px;
+	width: 20em;
+	background-color: white;
+	border: 1px solid #C0C0C0;
+	position: relative;
+}
+body.loginpage label {
+	color: #606060;
+}
+body.loginpage #user-tools {
+	display: none;
+}
+body.loginpage a.password_reset_link {
+	font-size: 9pt;
+}
+
+/* Vrijgeven en annuleren */
+.vrijgeven form, .cancellation form {
+	display: inline;
+}
+.vrijgeven .cancelled, .cancellation .cancelled {
+	text-decoration: line-through;
+}
+
+/* Printing */
+@media print {
+	div#header, .prevnext, .subscribe, #overDiv {
+		display: none;
+	}
+	table.agenda th {
+		background: none;
+		background-color: red;
+		background: #777777;
+	}
+}

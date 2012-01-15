@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block head %}
+	<script type="text/javascript">
+		function check_vrijgeven() {
+			return confirm("Weet je zeker dat je deze zaal wilt vrijgeven?");
+		}
+		function check_cancellation() {
+			return confirm("Weet je zeker dat je deze reservering wilt annuleren?");
+		}
+	</script>
+{% endblock %}
+
+{% block body %}
+<h1>Inschrijven {{ datehuman }}</h1>
+<form method="POST">
+{% csrf_token %}
+<table class="inschrijven">
+	{{ form.as_table }}
+	<tr>
+		<td></td>
+		<td><input type="submit" value="Inschrijven"></td>
+	</tr>
+</table>
+</form>
+
+{% if fixedrents %}
+<h1>Vrijgeven</h1>
+<ul class="vrijgeven">
+{% for fr in fixedrents %}
+	<li{% if fr.cancelled %} class="cancelled"{% endif %}>
+		{{ fr.hirer }} in de {{ fr.room }} ({{ fr.timeframe }})
+		{% if not fr.cancelled %}
+		<form method="POST" action="{% url add-exception year=year month=month day=day %}" onSubmit="return check_vrijgeven();">
+			{% csrf_token %}
+			<input type="hidden" name="fixedrent" value="{{ fr.id }}">
+			<input type="submit" value="Vrijgeven">
+		</form>
+		{% endif %}
+	</li>
+{% endfor %}
+</ul>
+{% endif %}
+{% if reservations %}
+<h1>Annuleren</h1>
+<ul class="cancellation">
+{% for r in reservations %}
+	<li{% if r.state == "cancelled" or r.state == "denied" %} class="cancelled"{% endif %}>
+		{{ r.hirer }} in de {{ r.room }} ({{ r.timeframe }}) [{{ r.getHumanState }}]
+		{% if r.state in cancellable_states %}
+		<form method="POST" action="{% url set-state %}" onSubmit="return check_cancellation();">
+			{% csrf_token %}
+			<input type="hidden" name="state" value="cancelled">
+			<input type="hidden" name="id" value="{{ r.id }}">
+			<input type="submit" value="Annuleren">
+		</form>
+		{% endif %}
+	</li>
+{% endfor %}
+</ul>
+{% endif %}
+{% endblock %}
