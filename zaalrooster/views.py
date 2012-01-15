@@ -215,10 +215,11 @@ def inschrijven(request, year, month, day):
 				messages.success(request, "Reservering geplaatst.")
 			r.save()
 			month_url = reverse('month-view', kwargs={'year': year, 'month': month})
-			subj = "[Zaalrooster] Aanvraag van %s voor %s" % (r.hirer, date.strftime("%d %b"))
-			msg = "%s wil graag de %s op %s (%s) voor een %s.\nHuidige status: %s\n\n%s" % (r.hirer, r.room, date.strftime("%d %B %Y"), r.timeframe, r.name, r.getHumanState(), settings.SITE_URL + month_url)
-			em = EmailMessage(subj, msg, to=settings.MODERATORS, cc=[request.user.email])
-			em.send()
+			if not request.user.vvsuser.can_moderate:
+				subj = "[Zaalrooster] Aanvraag van %s voor %s" % (r.hirer, date.strftime("%d %b"))
+				msg = "%s wil graag de %s op %s (%s) voor een %s.\nHuidige status: %s\n\n%s" % (r.hirer, r.room, date.strftime("%d %B %Y"), r.timeframe, r.name, r.getHumanState(), settings.SITE_URL + month_url)
+				em = EmailMessage(subj, msg, to=settings.MODERATORS, cc=[request.user.email])
+				em.send()
 			return HttpResponseRedirect(month_url)
 	else:
 		form = ReservationForm()
