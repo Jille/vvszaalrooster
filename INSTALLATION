@@ -1,0 +1,43 @@
+This application was written for the Villa van Schaeck. Please contact me if you want to use it.
+
+I have written this with Python 2.6.7, Django 1.3.1 and apache 2.2.21.
+
+Installation (the method I've used)
+* Make sure you have cloned this into a directory named 'vvs'
+* Copy settings.py.example to settings.py and fill all settings marked with XXX
+* Modify your apache configuration as stated below
+* Initialize Django by calling `python manage.py syncdb`
+
+Apache:
+* You'll need mod_wsgi
+	LoadModule wsgi_module        libexec/apache22/mod_wsgi.so
+* Tell it where to find your clone but strip the remaining /vvs/
+	<IfModule wsgi_module>
+		WSGIPythonPath /path/to/your/basedir/
+	</IfModule>
+	# This would work if your clone is in /path/to/your/clone/vvs/
+* Create a VirtualHost
+	<VirtualHost *:80>
+		ServerName zaalrooster.example.com
+		ServerAdmin your@email.address
+
+		Alias /media/ /path/to/your/basedir/vvs/media/
+		Alias /static/ /path/to/your/basedir/vvs/static/
+
+		WSGIScriptAlias / /path/to/your/basedir/vvs/wsgi.py
+
+		<Directory /path/to/your/basedir/vvs/>
+			<Files wsgi.py>
+				Order Deny,Allow
+				Allow from all
+			</Files>
+		</Directory>
+		<Directory /path/to/your/basedir/vvs/media/>
+			Order Deny,Allow
+			Allow from all
+		</Directory>
+		<Directory /path/to/your/basedir/vvs/static/>
+			Order Deny,Allow
+			Allow from all
+		</Directory>
+	</VirtualHost>
