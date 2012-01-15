@@ -54,6 +54,7 @@ def month_view(request, year = None, month = None):
 	assert(lastDIC.isoweekday() == 7)
 
 	rooms = dict(map(lambda x: (x.id, x.name), Room.objects.all()))
+	can_subscribe = len(request.user.vvsuser.cached_vvsgroups) > 0
 
 	dmap = {}
 	table = []
@@ -73,9 +74,8 @@ def month_view(request, year = None, month = None):
 			for rd in rowdates:
 				roomrow['days'].append({
 					'date': rd.strftime("%d %b"),
-					'subscribeURL': reverse('inschrijven', kwargs=split_date(rd)),
+					'subscribeURL': reverse('inschrijven', kwargs=split_date(rd)) if can_subscribe and rd >= today else None,
 					'activeMonth': (rd.month == month),
-					'inFuture': (rd >= today),
 					'fixedRent': dmap[rd][room]['fixedRent'],
 					'fixedRentExceptions': dmap[rd][room]['fixedRentExceptions'],
 					'reservations': dmap[rd][room]['reservations'],

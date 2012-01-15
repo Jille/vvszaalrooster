@@ -24,7 +24,7 @@
 	<tr class="daterow">
 		<td></td>
 		{% for day in roomrow.days %}
-		<td{% if not day.activeMonth %} class="inactiveMonth"{% endif %}>{% if day.inFuture %}<a href="{{ day.subscribeURL }}" class="subscribe"><img src="{{ MEDIA_URL }}subscribe.png"></a>{% endif %}{{ day.date }}</td>
+		<td{% if not day.activeMonth %} class="inactiveMonth"{% endif %}>{% if day.subscribeURL %}<a href="{{ day.subscribeURL }}" class="subscribe"><img src="{{ MEDIA_URL }}subscribe.png"></a>{% endif %}{{ day.date }}</td>
 		{% endfor %}
 	</tr>
 		{% endif %}
