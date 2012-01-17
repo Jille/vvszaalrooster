@@ -1,7 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import User, Group
-from vvs.zaalrooster.util import split_date
 from django.core.urlresolvers import reverse
+
+def split_date(dt, include_day=True):
+	dict = {
+		'year': dt.strftime("%Y"),
+		'month': dt.strftime("%m"),
+	}
+	if include_day:
+		dict['day'] = dt.strftime("%d")
+	return dict
 
 weekdays = {
 	1: 'maandag',

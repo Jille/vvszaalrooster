@@ -1,13 +1,4 @@
-from vvs.zaalrooster.models import *
-
-def split_date(dt, include_day=True):
-	dict = {
-		'year': dt.strftime("%Y"),
-		'month': dt.strftime("%m"),
-	}
-	if include_day:
-		dict['day'] = dt.strftime("%d")
-	return dict
+from vvs.zaalrooster.models import FixedRent, FixedRentException, Reservation
 
 def room_is_free_at(room, date):
 	frs = set(FixedRent.objects.filter(begin__lte=date, end__gte=date, weekday=date.isoweekday(), room=room))
