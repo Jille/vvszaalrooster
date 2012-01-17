@@ -166,7 +166,7 @@ def set_state(request):
 	elif oldstate == "pending" and newstate == "approved":
 		if r.hirer.notifications_to:
 			subj = "[Zaalrooster] Reservering %s %s goedgekeurd" % (r.room, r.date.strftime("%d %b"))
-			msg = "De reservering voor de %s op %s (%s) is goedgekeurd." % (r.room, r.date.strftime("%d %B %Y"), r.timeframe)
+			msg = "De reservering voor de %s op %s (%s) is goedgekeurd. (%s)" % (r.room, r.date.strftime("%d %B %Y"), r.timeframe, r.name)
 			em = EmailMessage(subj, msg, to=[r.hirer.notifications_to], cc=settings.MODERATORS)
 			em.send()
 			messages.success(request, "Mail over goedkeuring verzonden.")
@@ -175,7 +175,7 @@ def set_state(request):
 	elif oldstate == "pending" and newstate == "confirmed":
 		if r.hirer.notifications_to:
 			subj = "[Zaalrooster] Zaalhuur %s %s bevestigd" % (r.room, r.date.strftime("%d %b"))
-			msg = "De zaalhuur voor de %s op %s (%s) is getekend." % (r.room, r.date.strftime("%d %B %Y"), r.timeframe)
+			msg = "De zaalhuur voor de %s op %s (%s) is getekend. (%s)" % (r.room, r.date.strftime("%d %B %Y"), r.timeframe, r.name)
 			em = EmailMessage(subj, msg, to=[r.hirer.notifications_to], cc=settings.MODERATORS)
 			em.send()
 			messages.success(request, "Mail over tekenen verzonden.")
@@ -192,7 +192,7 @@ def set_state(request):
 			messages.info(request, "Mail over tekenverzoek niet verzonden. Er is geen e-mailadres ingesteld voor %s." % r.hirer)
 	elif not request.user.vvsuser.can_moderate and newstate == "cancelled":
 		subj = "[Zaalrooster] Reservering %s op %s geannuleerd" % (r.room, r.date.strftime("%d %b"))
-		msg = "De zaalhuur van de %s op %s (%s) is door %s geannuleerd." % (r.room, r.date.strftime("%d %B %Y"), r.timeframe, r.hirer)
+		msg = "De zaalhuur van de %s op %s (%s) is door %s geannuleerd. (%s)" % (r.room, r.date.strftime("%d %B %Y"), r.timeframe, r.hirer, r.name)
 		em = EmailMessage(subj, msg, to=settings.MODERATORS, cc=[request.user.email])
 		em.send()
 		messages.success(request, "Reservering geannuleerd.")
