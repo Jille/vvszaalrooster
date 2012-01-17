@@ -103,7 +103,7 @@ table.agenda td .fixedRentException {
 table.agenda td .state_pending:after {
 	content:"?";
 }
-table.agenda td .state_approved {
+table.agenda td .state_approved, table.agenda td .state_needsigning {
 	border-bottom: 1px dashed #000000;
 	display: inline;
 }

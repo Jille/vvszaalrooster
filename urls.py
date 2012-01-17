@@ -17,7 +17,7 @@ urlpatterns = patterns('',
 		url(r'^$', zaalrooster.views.home, name='home'),
 		url(r'^(?P<year>\d{4})/(?P<month>\d{2})/$', zaalrooster.views.month_view, name='month-view'),
 		url(r'^(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/inschrijven/$', zaalrooster.views.inschrijven, name='inschrijven'),
-		url(r'^((?P<year>\d{4})/(?P<month>\d{2})/((?P<day>\d{2})/)?|(?P<future>future/))?(?P<state>pending|approved|confirmed|backup|denied|cancelled)/$', zaalrooster.views.list_view, name='list-view'),
+		url(r'^((?P<year>\d{4})/(?P<month>\d{2})/((?P<day>\d{2})/)?|(?P<future>future/))?(?P<state>pending|approved|needsigning|confirmed|backup|denied|cancelled)/$', zaalrooster.views.list_view, name='list-view'),
 		url(r'^(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/exception/add/$', zaalrooster.views.add_exception, name='add-exception'),
 
 		url(r'^set-state/$', zaalrooster.views.set_state, name='set-state'),

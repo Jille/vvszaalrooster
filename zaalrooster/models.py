@@ -15,7 +15,8 @@ weekdays = {
 
 states = (
 	('pending', 'Aangevraagd'),
-	('approved', 'Goedgekeurd'),
+	('approved', 'Gereserveerd'),
+	('needsigning', 'Te ondertekenen'),
 	('confirmed', 'Getekend'),
 	('backup', 'Reservelijst'),
 	('denied', 'Geweigerd'),
