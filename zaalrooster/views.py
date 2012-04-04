@@ -243,7 +243,7 @@ def inschrijven(request, year, month, day):
 			frs.remove(fre.rental)
 			fre.rental.cancelled = True
 			frs.append(fre.rental)
-	rs = list(Reservation.objects.filter(date=date, hirer__in=request.user.vvsuser.cached_vvsgroups).exclude(state__in=['denied', 'cancelled']).order_by('hirer'))
+	rs = list(Reservation.objects.filter(date=date, hirer__in=request.user.vvsuser.cached_vvsgroups).order_by('hirer'))
 
 	return render_to_response('inschrijven.html', dict(split_date(date), **{'form': form, 'datehuman': datehuman, 'fixedrents': frs, 'reservations': rs, 'cancellable_states': cancellable_states}), context_instance=RequestContext(request))
 
