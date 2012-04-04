@@ -115,7 +115,7 @@ table.agenda td .state_backup {
 table.agenda td .state_backup:after {
 	content:"?";
 }
-table.agenda td .state_cancelled, table.agenda td .state_denied { 
+table.agenda td .state_cancelled, table.agenda td .state_denied, table.agenda td .state_cancel_request { 
 	text-decoration: line-through;
 }
 .prevnext {

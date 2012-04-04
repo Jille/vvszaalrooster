@@ -45,12 +45,12 @@
 <h1>Annuleren</h1>
 <ul class="cancellation">
 {% for r in reservations %}
-	<li{% if r.state == "cancelled" or r.state == "denied" %} class="cancelled"{% endif %}>
+	<li{% if r.state == "cancel_request" or r.state == "cancelled" or r.state == "denied" %} class="cancelled"{% endif %}>
 		{{ r.hirer }} in de {{ r.room }} ({{ r.timeframe }}) [{{ r.getHumanState }}]
 		{% if r.state in cancellable_states %}
 		<form method="POST" action="{% url set-state %}" onSubmit="return check_cancellation();">
 			{% csrf_token %}
-			<input type="hidden" name="state" value="cancelled">
+			<input type="hidden" name="state" value="cancel_request">
 			<input type="hidden" name="id" value="{{ r.id }}">
 			<input type="submit" value="Annuleren">
 		</form>

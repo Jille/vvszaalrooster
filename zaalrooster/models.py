@@ -28,6 +28,7 @@ states = (
 	('confirmed', 'Getekend'),
 	('backup', 'Reservelijst'),
 	('denied', 'Geweigerd'),
+	('cancel_request', 'Te annuleren'),
 	('cancelled', 'Geannuleerd'),
 )
 states_dict = dict(states)
