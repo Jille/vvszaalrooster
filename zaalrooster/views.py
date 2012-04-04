@@ -30,7 +30,10 @@ def home(request):
 	months = []
 	for dt in [today, nextMonth]:
 		months.append(dict(split_date(dt, include_day=False), human=dt.strftime("%B %Y").capitalize()))
-	return render_to_response('moderator_home.html', {'months': months}, context_instance=RequestContext(request))
+	counters = {}
+	for i in ('pending', 'approved', 'needsigning', 'cancel_request'):
+		counters[i] = Reservation.objects.filter(state=i).count()
+	return render_to_response('moderator_home.html', {'months': months, 'counters': counters}, context_instance=RequestContext(request))
 
 @login_required
 def month_view(request, year = None, month = None):

@@ -6,10 +6,10 @@
 {% for m in months %}
 	<li><a href="{% url month-view year=m.year, month=m.month %}">{{ m.human }}</a></li>
 {% endfor %}
-	<li><a href="/pending/">Openstaande aanvragen</a></li>
-	<li><a href="/approved/">Gereserveerde aanvragen</a></li>
-	<li><a href="/needsigning/">Te tekenen aanvragen</a></li>
-	<li><a href="/cancel_request/">Te annuleren aanvragen</a></li>
+	<li><a href="/pending/">Openstaande aanvragen ({{ counters.pending }})</a></li>
+	<li><a href="/approved/">Gereserveerde aanvragen ({{ counters.approved }})</a></li>
+	<li><a href="/needsigning/">Te tekenen aanvragen ({{ counters.needsigning }})</a></li>
+	<li><a href="/cancel_request/">Te annuleren aanvragen ({{ counters.cancel_request }})</a></li>
 
 	<li class="empty"></li>
 
