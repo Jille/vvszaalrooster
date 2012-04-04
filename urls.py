@@ -28,7 +28,7 @@ urlpatterns = patterns('',
 		(r'^admin/password_reset/done/$', auth.views.password_reset_done),
 		(r'^reset/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$', auth.views.password_reset_confirm),
 		(r'^reset/done/$', auth.views.password_reset_complete),
-    url(r'^admin/', include(admin.site.urls)),
+		url(r'^admin/', include(admin.site.urls)),
 
 		(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': MEDIA_ROOT}),
 )
