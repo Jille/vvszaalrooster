@@ -1,6 +1,5 @@
 from django.conf.urls.defaults import patterns, include, url
 import django.views.generic.simple
-from django.views import generic
 import os.path
 
 from django.contrib import auth
