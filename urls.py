@@ -1,6 +1,7 @@
 from django.conf.urls.defaults import patterns, include, url
 import django.views.generic.simple
 from django.views import generic
+import os.path
 
 from django.contrib import auth
 import django.contrib.auth.views
@@ -31,4 +32,5 @@ urlpatterns = patterns('',
 		url(r'^admin/', include(admin.site.urls)),
 
 		(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': MEDIA_ROOT}),
+		(r'^favicon.ico$', 'django.views.generic.simple.redirect_to', {'url': '/media/favicon.ico'}),
 )
