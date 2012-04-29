@@ -2,10 +2,63 @@
 
 {% block head %}
 	<script type="text/javascript" src="{{ MEDIA_URL }}overlib.js"></script>
+	<script type="text/javascript">
+		var active_rooms = {};
+
+		// Taken from http://www.w3schools.com/js/js_cookies.asp
+		function getCookie(c_name) {
+			var i,x,y,ARRcookies=document.cookie.split(";");
+			for (i=0;i<ARRcookies.length;i++) {
+				x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+				y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+				x=x.replace(/^\s+|\s+$/g,"");
+				if (x==c_name) {
+					return unescape(y);
+				}
+			}
+		}
+
+		function zaalcheckers_init() {
+			var ar = getCookie("vvs_hiderooms").split(',');
+			for(var i = 0; ar.length > i; i++) {
+				document.getElementById('zaal_'+ ar[i]).checked = false;
+				internal_toggle_zaal(ar[i], false);
+			}
+		}
+		function internal_toggle_zaal(id, enable) {
+			var els = document.getElementsByClassName('zaalrow_'+ id);
+			for(var i = 0; els.length > i; i++) {
+				els[i].style.display = enable ? '' : 'none';
+			}
+			active_rooms[id] = enable;
+		}
+		function toggle_zaal(id, enable) {
+			internal_toggle_zaal(id, enable);
+			var ar = [];
+			for(r in active_rooms) {
+				if(!active_rooms[r]) {
+					ar.push(r)
+				}
+			}
+			document.cookie = "vvs_hiderooms="+ ar.join(',') + "; path=/";
+		}
+	</script>
 {% endblock %}
+{% block bodyattrs %} onload="zaalcheckers_init()"{% endblock %}
 
 {% block body %}
-<span class="prevnext"><a href="{{ prev }} "><img src="{{ MEDIA_URL }}prev.png"></a> <a href="{{ next }}"><img src="{{ MEDIA_URL }}next.png"></a></span>
+<span class="prevnext">
+<form id="zaalchecker">
+<table>
+	<tr>
+{% for rid, room in rooms.items %}
+		<td><input type="checkbox" id="zaal_{{ rid }}" checked onChange="toggle_zaal({{ rid }}, this.checked);"><label for="zaal_{{ rid }}">{{ room|capfirst }}</label></td>
+{% endfor %}
+		<td><a href="{{ prev }} "><img src="{{ MEDIA_URL }}prev.png"></a> <a href="{{ next }}"><img src="{{ MEDIA_URL }}next.png"></a></td>
+	</tr>
+</table>
+</form>
+</span>
 <h1>Zaalrooster {{ monthhuman }} {{ year }}</h1>
 <table class="agenda">
 	<tr>
@@ -28,7 +81,7 @@
 		{% endfor %}
 	</tr>
 		{% endif %}
-	<tr>
+	<tr class="zaalrow_{{ roomrow.id }}">
 		<td>{{ roomrow.room|capfirst }}</td>
 		{% for day in roomrow.days %}
 			<td>

@@ -73,7 +73,7 @@ def month_view(request, year = None, month = None):
 			dt += datetime.timedelta(days=1)
 
 		for room in rooms:
-			roomrow = {'room': rooms[room], 'days': []}
+			roomrow = {'room': rooms[room], 'id': room, 'days': []}
 			for rd in rowdates:
 				roomrow['days'].append({
 					'date': rd.strftime("%d %b"),
