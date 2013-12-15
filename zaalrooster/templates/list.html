@@ -2,6 +2,8 @@
 
 {% block head %}
 		<script type="text/javascript">
+			var fast_mode = false;
+
 			function change_state(el, id, oldstate, newstate, desc) {
 				newstateHuman = newstate;
 				for(var i = 0; el.options.length > i; i++) {
@@ -11,16 +13,29 @@
 					}
 				}
 				if(confirm("Zet "+ desc +" op "+ newstateHuman +"?")) {
-					location.href = '/set-state/?id='+ id +'&state='+ newstate;
+					url = '/set-state/?id='+ id +'&state='+ newstate;
+					if(fast_mode) {
+						document.getElementById('fast_frame').src = url;
+						el.disabled = true;
+					} else {
+						location.href = url;
+					}
 				} else {
 					el.value = oldstate;
 				}
+			}
+
+			function set_fast_mode(val) {
+				fast_mode = val;
+				document.getElementById('fast_frame').style.display = val ? '' : 'none';
 			}
 		</script>
 {% endblock %}
 
 {% block body %}
 <h1>{{ humanstate }}{{ humanperiod }}</h1>
+<label for="fast_mode">Sneller? </label><input type="checkbox" id="fast_mode" onChange="set_fast_mode(this.checked);">
+<iframe style="width: 100%; display: none" src="" id="fast_frame"></iframe>
 <table class="list">
 	<tr>
 		<th>Huurder</th>
