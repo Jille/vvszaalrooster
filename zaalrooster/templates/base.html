@@ -9,7 +9,9 @@
 		<div id="wrapper">
 			<div id="header">
 				<span id="user-tools">
+{% if not user.is_anonymous %}
 					Dag {{ user }}. <a href="{% url logout %}">Uitloggen?</a>
+{% endif %}
 				</span>
 				<h1>Zaalrooster Villa van Schaeck</h1>
 			</div>
